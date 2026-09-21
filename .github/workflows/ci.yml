@@ -20,7 +20,13 @@ jobs:
           test -f calculator.css
           test -f calculator.js
 
-      - name: Check calculator code
+      - name: Check calculator HTML
         run: |
-          grep -q 'current-display' Calculator.html
-          grep -q 'function calculate' calculator.js
+          grep -q '<title>Calculator</title>' Calculator.html
+          grep -q 'id="current-display"' Calculator.html
+
+      - name: Check calculator JavaScript
+        run: |
+          grep -q '^function calculate()' calculator.js
+          grep -q 'function addNumber' calculator.js
+          grep -q 'function chooseOperator' calculator.js
