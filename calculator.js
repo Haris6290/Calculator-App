@@ -14,17 +14,21 @@ const percentageButton = document.getElementById("percentage");
 const equalsButton = document.querySelector(".equals");
 
 
+// Update display
 function updateDisplay() {
+
     currentDisplay.textContent = currentNumber || "0";
 
     if (operator && previousNumber) {
         previousDisplay.textContent = previousNumber + " " + operator;
-    } else {
+    } 
+    else {
         previousDisplay.textContent = "";
     }
 }
 
 
+// Add number
 function addNumber(number) {
 
     if (number === "." && currentNumber.includes(".")) {
@@ -33,7 +37,8 @@ function addNumber(number) {
 
     if (number === "." && currentNumber === "") {
         currentNumber = "0.";
-    } else {
+    } 
+    else {
         currentNumber += number;
     }
 
@@ -41,6 +46,7 @@ function addNumber(number) {
 }
 
 
+// Choose operator
 function chooseOperator(selectedOperator) {
 
     if (currentNumber === "" && previousNumber === "") {
@@ -59,6 +65,7 @@ function chooseOperator(selectedOperator) {
 }
 
 
+// Calculate result
 function calculate() {
 
     if (previousNumber === "" || currentNumber === "" || operator === null) {
@@ -82,9 +89,11 @@ function calculate() {
     else if (operator === "÷") {
 
         if (secondNumber === 0) {
+
             currentNumber = "Error";
             previousNumber = "";
             operator = null;
+
             updateDisplay();
             return;
         }
@@ -100,6 +109,7 @@ function calculate() {
 }
 
 
+// Clear calculator
 function clearCalculator() {
 
     currentNumber = "";
@@ -110,6 +120,7 @@ function clearCalculator() {
 }
 
 
+// Delete last number
 function deleteNumber() {
 
     currentNumber = currentNumber.slice(0, -1);
@@ -118,6 +129,7 @@ function deleteNumber() {
 }
 
 
+// Calculate percentage
 function calculatePercentage() {
 
     if (currentNumber === "") {
@@ -130,6 +142,7 @@ function calculatePercentage() {
 }
 
 
+// Number button clicks
 numberButtons.forEach(button => {
 
     button.addEventListener("click", () => {
@@ -139,6 +152,7 @@ numberButtons.forEach(button => {
 });
 
 
+// Operator button clicks
 operatorButtons.forEach(button => {
 
     button.addEventListener("click", () => {
@@ -148,6 +162,7 @@ operatorButtons.forEach(button => {
 });
 
 
+// Other button clicks
 equalsButton.addEventListener("click", calculate);
 
 clearButton.addEventListener("click", clearCalculator);
@@ -155,3 +170,57 @@ clearButton.addEventListener("click", clearCalculator);
 deleteButton.addEventListener("click", deleteNumber);
 
 percentageButton.addEventListener("click", calculatePercentage);
+
+
+// Keyboard support
+document.addEventListener("keydown", (event) => {
+
+    const key = event.key;
+
+    // Numbers and decimal
+    if (!isNaN(key) || key === ".") {
+        addNumber(key);
+    }
+
+    // Addition
+    else if (key === "+") {
+        chooseOperator("+");
+    }
+
+    // Subtraction
+    else if (key === "-") {
+        chooseOperator("−");
+    }
+
+    // Multiplication
+    else if (key === "*") {
+        chooseOperator("×");
+    }
+
+    // Division
+    else if (key === "/") {
+        event.preventDefault();
+        chooseOperator("÷");
+    }
+
+    // Equals
+    else if (key === "Enter" || key === "=") {
+        calculate();
+    }
+
+    // Delete
+    else if (key === "Backspace") {
+        deleteNumber();
+    }
+
+    // Clear
+    else if (key === "Escape") {
+        clearCalculator();
+    }
+
+    // Percentage
+    else if (key === "%") {
+        calculatePercentage();
+    }
+
+});
