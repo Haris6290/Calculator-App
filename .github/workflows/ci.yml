@@ -16,14 +16,14 @@ jobs:
 
       - name: Check required files
         run: |
-          test -f Calculator.html
+          test -f index.html
           test -f calculator.css
           test -f calculator.js
 
       - name: Check calculator HTML
         run: |
-          grep -q '<title>Calculator</title>' Calculator.html
-          grep -q 'id="current-display"' Calculator.html
+          grep -q '<title>Calculator</title>' index.html
+          grep -q 'id="current-display"' index.html
 
       - name: Check calculator JavaScript
         run: |
