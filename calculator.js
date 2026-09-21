@@ -73,7 +73,7 @@ function chooseOperator(selectedOperator) {
 
 
 // Calculate result
-function calculateResult() {
+function calculate() {
     if (previousNumber === "" || currentNumber === "" || operator === null) {
         return;
     }
