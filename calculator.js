@@ -21,7 +21,7 @@ function updateDisplay() {
 
     if (operator && previousNumber) {
         previousDisplay.textContent = previousNumber + " " + operator;
-    } 
+    }
     else {
         previousDisplay.textContent = "";
     }
@@ -31,13 +31,20 @@ function updateDisplay() {
 // Add number
 function addNumber(number) {
 
+    // Start a new calculation after an error
+    if (currentNumber === "Error") {
+        currentNumber = "";
+    }
+
+    // Prevent multiple decimal points
     if (number === "." && currentNumber.includes(".")) {
         return;
     }
 
+    // Add zero before decimal point
     if (number === "." && currentNumber === "") {
         currentNumber = "0.";
-    } 
+    }
     else {
         currentNumber += number;
     }
@@ -79,15 +86,16 @@ function calculate() {
 
     if (operator === "+") {
         result = firstNumber + secondNumber;
-    } 
+    }
     else if (operator === "−") {
         result = firstNumber - secondNumber;
-    } 
+    }
     else if (operator === "×") {
         result = firstNumber * secondNumber;
-    } 
+    }
     else if (operator === "÷") {
 
+        // Prevent division by zero
         if (secondNumber === 0) {
 
             currentNumber = "Error";
@@ -123,6 +131,11 @@ function clearCalculator() {
 // Delete last number
 function deleteNumber() {
 
+    if (currentNumber === "Error") {
+        clearCalculator();
+        return;
+    }
+
     currentNumber = currentNumber.slice(0, -1);
 
     updateDisplay();
@@ -132,7 +145,7 @@ function deleteNumber() {
 // Calculate percentage
 function calculatePercentage() {
 
-    if (currentNumber === "") {
+    if (currentNumber === "" || currentNumber === "Error") {
         return;
     }
 
