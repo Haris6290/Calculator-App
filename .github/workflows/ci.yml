@@ -1,0 +1,26 @@
+name: Calculator CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Check required files
+        run: |
+          test -f Calculator.html
+          test -f calculator.css
+          test -f calculator.js
+
+      - name: Check calculator code
+        run: |
+          grep -q 'current-display' Calculator.html
+          grep -q 'function calculate' calculator.js
